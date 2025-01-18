@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "paths": {
+      "store": ["store"],
+      "pages": ["pages"],
+      "utils": ["utils"],
+      "routes": ["routes"],
+      "providers": ["providers"],
+      "components": ["components"]
+    }
+  },
+  "exclude": ["node_modules", "public", ".vscode"]
+}
