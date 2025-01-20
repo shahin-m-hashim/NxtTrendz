@@ -29,6 +29,9 @@ importers:
       mongoose:
         specifier: ^8.9.5
         version: 8.9.5
+      zod:
+        specifier: ^3.24.1
+        version: 3.24.1
     devDependencies:
       dotenv:
         specifier: ^16.4.7
@@ -751,6 +754,9 @@ packages:
 
   yallist@4.0.0:
     resolution: {integrity: sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A==}
+
+  zod@3.24.1:
+    resolution: {integrity: sha512-muH7gBL9sI1nciMZV67X5fTKKBLtwpZ5VBp1vsOQzj1MhrBZ4wlVCm3gedKZWLp0Oyel8sIGfeiz54Su+OVT+A==}
 
 snapshots:
 
@@ -1491,3 +1497,5 @@ snapshots:
   wrappy@1.0.2: {}
 
   yallist@4.0.0: {}
+
+  zod@3.24.1: {}

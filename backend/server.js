@@ -7,25 +7,26 @@ import cookieParser from "cookie-parser";
 
 import logger from "./middlewares/logger.js";
 
+import authRoute from "./routes/authRoute.js";
+
 const server = express();
 const frontendOrigin = process.env.FRONTEND_ORIGIN;
+
+mongoose.connection.on("connected", () => console.log("DB connected."));
+mongoose.connection.on("error", (err) => console.error("DB error:", err));
+mongoose.connection.on("disconnected", () => console.log("DB disconnected."));
 
 const startServer = async () => {
   try {
     await mongoose.connect(process.env.DATABASE_URI);
-    console.log("Database connected successfully");
 
     server.use(
       cors({
-        origin: frontendOrigin,
-        methods: "GET, POST, PUT, PATCH, DELETE",
         credentials: true,
+        origin: frontendOrigin,
+        methods: ["GET, POST, PUT, PATCH, DELETE"],
       })
     );
-
-    server.use(express.json());
-    server.use(cookieParser());
-    server.use(express.urlencoded({ extended: true }));
 
     server.use(
       helmet({
@@ -42,7 +43,13 @@ const startServer = async () => {
       })
     );
 
+    server.use(express.json());
+    server.use(cookieParser());
+    server.use(express.urlencoded({ extended: true }));
+
     server.use(logger);
+
+    server.use("/api/auth", authRoute);
 
     server.use("*", (req, res) => {
       res
@@ -50,19 +57,11 @@ const startServer = async () => {
         .send("Looks like, the page you are looking for doesn't exist");
     });
 
-    server.listen(8080, () =>
-      console.log(`Server started running on http://localhost:8080`)
+    server.listen(process.env.PORT, () =>
+      console.log(`Server running on http://localhost:${process.env.PORT}`)
     );
   } catch (err) {
-    if (err instanceof mongoose.Error) {
-      console.error("Database connection error:", {
-        name: err.name,
-        message: err.message,
-      });
-    } else {
-      console.log(`Server Error: ${err.message}`);
-    }
-
+    console.log(`Server error: ${err.message}`);
     process.exit(1);
   }
 };
