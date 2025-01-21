@@ -8,6 +8,7 @@ import cookieParser from "cookie-parser";
 import logger from "./middlewares/logger.js";
 
 import authRoute from "./routes/authRoute.js";
+import { authLimiter, globalLimiter } from "./middlewares/apiLimiter.js";
 
 const server = express();
 const frontendOrigin = process.env.FRONTEND_ORIGIN;
@@ -49,7 +50,11 @@ const startServer = async () => {
 
     server.use(logger);
 
-    server.use("/api/auth", authRoute);
+    server.use("/api/auth", authLimiter, authRoute);
+
+    server.use(globalLimiter);
+
+    // private routes
 
     server.use("*", (req, res) => {
       res
