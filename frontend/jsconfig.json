@@ -7,7 +7,7 @@
       "pages": ["pages"],
       "utils": ["utils"],
       "routes": ["routes"],
-      "providers": ["providers"],
+      "schemas": ["schemas"],
       "components": ["components"]
     }
   },

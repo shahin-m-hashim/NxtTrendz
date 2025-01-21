@@ -10,7 +10,7 @@ const useStore = create(
     })),
     {
       name: "store",
-      enabled: import.meta.env.VITE_ENVIRONMENT === "DEVELOPMENT",
+      enabled: import.meta.env.VITE_ENVIRONMENT === "development",
     }
   )
 );

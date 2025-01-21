@@ -11,6 +11,7 @@ export default defineConfig({
       store: "/src/store",
       pages: "/src/pages",
       routes: "/src/routes",
+      schemas: "/src/schemas",
       components: "/src/components",
     },
   },
