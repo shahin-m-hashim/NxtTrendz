@@ -50,7 +50,7 @@ const startServer = async () => {
 
     server.use(logger);
 
-    server.use("/api/auth", authLimiter, authRoute);
+    server.use("/auth", authLimiter, authRoute);
 
     server.use(globalLimiter);
 

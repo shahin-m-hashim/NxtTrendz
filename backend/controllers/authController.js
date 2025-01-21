@@ -63,6 +63,14 @@ export const loginController = async (req, res) => {
   } catch (e) {
     console.error("Error during login:", e.message);
 
+    if (e.message === "Invalid credentials") {
+      return res.status(401).json({
+        data: null,
+        success: false,
+        error: "Invalid credentials",
+      });
+    }
+
     return res.status(500).json({
       data: null,
       success: false,
