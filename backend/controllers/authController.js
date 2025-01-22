@@ -1,9 +1,5 @@
 import { hash } from "bcrypt";
-import {
-  createAccessToken,
-  createRefreshToken,
-  verifyRefreshToken,
-} from "../utils/token.js";
+import { createAccessToken, createRefreshToken } from "../utils/token.js";
 import { loginService, registerService } from "../services/authService.js";
 
 export const registerController = async (req, res) => {
@@ -46,19 +42,22 @@ export const loginController = async (req, res) => {
     const token = createAccessToken(sub);
     const refreshToken = createRefreshToken(sub);
 
+    res.cookie("token", token, {
+      httpOnly: true,
+      maxAge: 1 * 24 * 60 * 60 * 1000,
+      secure: process.env.ENVIRONMENT === "production",
+    });
+
     res.cookie("refreshToken", refreshToken, {
       httpOnly: true,
-      domain: "localhost",
       maxAge: 7 * 24 * 60 * 60 * 1000,
       secure: process.env.ENVIRONMENT === "production",
     });
 
     res.status(200).json({
-      success: true,
-      data: {
-        token,
-      },
+      data: null,
       error: null,
+      success: true,
     });
   } catch (e) {
     console.error("Error during login:", e.message);
@@ -79,42 +78,12 @@ export const loginController = async (req, res) => {
   }
 };
 
-export const refreshTokensController = (req, res) => {
-  const refreshToken = req.cookies.refreshToken;
-
-  if (!refreshToken) {
-    return res.status(401).json({
-      data: null,
-      success: false,
-      error: "Refresh token not found",
-    });
-  }
-
-  try {
-    const refreshPayload = verifyRefreshToken(refreshToken);
-    const newAccessToken = createAccessToken(refreshPayload.sub);
-    const newRefreshToken = createRefreshToken(refreshPayload.sub);
-
-    res.cookie("refreshToken", newRefreshToken, {
-      httpOnly: true,
-      domain: "localhost",
-      maxAge: 7 * 24 * 60 * 60 * 1000,
-      secure: process.env.ENVIRONMENT === "production",
-    });
-
-    res.status(200).json({
-      data: {
-        token: newAccessToken,
-      },
-      success: true,
-      error: null,
-    });
-  } catch (err) {
-    console.log(err.message);
-    return res.status(401).json({
-      data: null,
-      success: false,
-      error: "Invalid or expired refresh token",
-    });
-  }
+export const logoutController = (req, res) => {
+  res.clearCookie("token");
+  res.clearCookie("refreshToken");
+  res.status(200).json({
+    data: null,
+    error: null,
+    success: true,
+  });
 };

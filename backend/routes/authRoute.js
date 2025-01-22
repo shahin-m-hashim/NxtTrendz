@@ -2,8 +2,8 @@ import express from "express";
 
 import {
   loginController,
+  logoutController,
   registerController,
-  refreshTokensController,
 } from "../controllers/authController.js";
 
 import { sanitizeLogin, sanitizeRegister } from "../middlewares/sanitizer.js";
@@ -14,6 +14,6 @@ authRoute.post("/register", sanitizeRegister, registerController);
 
 authRoute.post("/login", sanitizeLogin, loginController);
 
-authRoute.post("/refresh", refreshTokensController);
+authRoute.get("/logout", logoutController);
 
 export default authRoute;

@@ -1,33 +1,65 @@
-import { verifyAccessToken } from "../utils/token.js";
+import {
+  verifyAccessToken,
+  createAccessToken,
+  createRefreshToken,
+  verifyRefreshToken,
+} from "../utils/token.js";
 
 export default async function authorize(req, res, next) {
-  const authHeader = req.headers["authorization"];
+  const { token, refreshToken } = req.cookies;
 
-  if (!authHeader || !authHeader.startsWith("Bearer ")) {
-    return res.status(401).json({
-      data: null,
-      success: false,
-      error: "Invalid Authorization Header",
-    });
-  }
+  const refreshTokens = () => {
+    if (!refreshToken) {
+      res.clearCookie("token");
+      res.clearCookie("refreshToken");
 
-  try {
-    const payload = verifyAccessToken(authHeader.split(" ")[1]);
-    req.user = payload.sub;
-    return next();
-  } catch (error) {
-    if (error.name === "TokenExpiredError") {
       return res.status(401).json({
         data: null,
         success: false,
-        error: "Access token expired.",
+        error: "Invalid token.",
       });
-    } else {
+    }
+
+    try {
+      const payload = verifyRefreshToken(refreshToken);
+      const newAccessToken = createAccessToken(payload.sub);
+      const newRefreshToken = createRefreshToken(payload.sub);
+
+      res.cookie("token", newAccessToken, {
+        httpOnly: true,
+        maxAge: 1 * 24 * 60 * 60 * 1000,
+        secure: process.env.ENVIRONMENT === "production",
+      });
+
+      res.cookie("refreshToken", newRefreshToken, {
+        httpOnly: true,
+        maxAge: 7 * 24 * 60 * 60 * 1000,
+        secure: process.env.ENVIRONMENT === "production",
+      });
+
+      req.user = payload.sub;
+      next();
+    } catch (e) {
+      res.clearCookie("token");
+      res.clearCookie("refreshToken");
+
       return res.status(401).json({
         data: null,
         success: false,
-        error: "Invalid access token.",
+        error: "Expired token.",
       });
+    }
+  };
+
+  if (!token) {
+    refreshTokens();
+  } else {
+    try {
+      const payload = verifyAccessToken(token);
+      req.user = payload.sub;
+      next();
+    } catch (error) {
+      refreshTokens();
     }
   }
 }

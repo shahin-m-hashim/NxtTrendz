@@ -10,6 +10,8 @@ import logger from "./middlewares/logger.js";
 import authRoute from "./routes/authRoute.js";
 import { authLimiter, globalLimiter } from "./middlewares/apiLimiter.js";
 
+import authorize from "./middlewares/authorize.js";
+
 const server = express();
 const frontendOrigin = process.env.FRONTEND_ORIGIN;
 
@@ -52,9 +54,17 @@ const startServer = async () => {
 
     server.use("/auth", authLimiter, authRoute);
 
-    server.use(globalLimiter);
-
     // private routes
+
+    server.use(globalLimiter, authorize);
+
+    server.use("/test", (req, res) => {
+      return res.json({
+        data: null,
+        success: true,
+        error: null,
+      });
+    });
 
     server.use("*", (req, res) => {
       res
