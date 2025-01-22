@@ -28,7 +28,6 @@ export default function RegisterPage() {
 
   const mutation = useMutation({
     mutationFn: registerUser,
-    onSuccess: () => resetForm("register"),
   });
 
   const handleSubmit = (e) => {

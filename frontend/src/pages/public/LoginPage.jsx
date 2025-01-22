@@ -22,7 +22,6 @@ export default function LoginPage() {
 
   const mutation = useMutation({
     mutationFn: loginUser,
-    onSuccess: () => resetForm("login"),
   });
 
   const handleSubmit = (e) => {

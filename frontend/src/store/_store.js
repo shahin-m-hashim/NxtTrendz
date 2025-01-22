@@ -1,11 +1,14 @@
 import { create } from "zustand";
 import { devtools } from "zustand/middleware";
-import createFormsSlice from "store/formsSlice";
 import { immer } from "zustand/middleware/immer";
+
+import createAuthSlice from "store/authSlice";
+import createFormsSlice from "store/formsSlice";
 
 const useStore = create(
   devtools(
     immer((set, get) => ({
+      ...createAuthSlice(set, get),
       ...createFormsSlice(set, get),
     })),
     {

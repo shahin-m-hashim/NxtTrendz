@@ -1,5 +1,12 @@
+import { testApi } from "api/authApi";
+import { useMutation } from "@tanstack/react-query";
+
 export default function HomePage() {
   console.log("Rendering Home Page");
+
+  const mutation = useMutation({
+    mutationFn: testApi,
+  });
 
   return (
     <main className="flex flex-col items-center justify-center md:flex-row md:gap-14">
@@ -22,7 +29,10 @@ export default function HomePage() {
           in your own way.
         </p>
 
-        <button className="w-1/2 px-4 py-2 bg-[#0967d2] text-white rounded-md">
+        <button
+          onClick={() => mutation.mutate()}
+          className="w-1/2 px-4 py-2 bg-[#0967d2] text-white rounded-md"
+        >
           Shop Now
         </button>
       </div>
