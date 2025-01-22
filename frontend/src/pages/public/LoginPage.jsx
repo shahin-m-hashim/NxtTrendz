@@ -137,7 +137,7 @@ export default function LoginPage() {
         )}
       </form>
 
-      <Link to="/register" className="text-[#0b69ff]">
+      <Link to="/auth/register" className="text-[#0b69ff]">
         Don&apos;t have an account? Register.
       </Link>
     </>

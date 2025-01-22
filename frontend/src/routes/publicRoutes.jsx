@@ -1,22 +1,29 @@
-import { lazy } from "react";
-
-const PublicLayout = lazy(() => import("components/wrappers/PublicLayout"));
+import { lazy, Suspense } from "react";
+import PublicLayout from "components/layouts/PublicLayout";
 
 const LoginPage = lazy(() => import("pages/public/LoginPage"));
 const RegisterPage = lazy(() => import("pages/public/RegisterPage"));
 
 const publicRoutes = [
   {
-    path: "/",
+    path: "auth",
     element: <PublicLayout />,
     children: [
       {
         path: "login",
-        element: <LoginPage />,
+        element: (
+          <Suspense>
+            <LoginPage />
+          </Suspense>
+        ),
       },
       {
         path: "register",
-        element: <RegisterPage />,
+        element: (
+          <Suspense>
+            <RegisterPage />
+          </Suspense>
+        ),
       },
     ],
   },

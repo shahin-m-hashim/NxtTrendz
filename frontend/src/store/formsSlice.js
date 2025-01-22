@@ -43,34 +43,40 @@ const createFormsSlice = (set) => ({
   setRegisterFormField: (field, value) => {
     set(
       (state) => {
-        let result;
-
         const { register } = state.forms;
-
         register[field].value = value;
 
-        if (field === "username") {
-          result = usernameSchema.safeParse(value);
-          if (!result.success) {
-            register.username.error = result.error.issues[0].message;
-          } else {
-            register.username.error = null;
-          }
-        } else if (field === "password") {
-          result = passwordSchema.safeParse(value);
-          if (!result.success) {
-            register.password.error = result.error.issues[0].message;
-          } else {
-            register.password.error = null;
-          }
-        } else if (field === "confirmPassword") {
-          const { password, confirmPassword } = register;
-          if (password.value !== confirmPassword.value) {
-            register.confirmPassword.error = "Passwords do not match";
-          } else {
-            register.confirmPassword.error = null;
-          }
-        }
+        const validators = {
+          username: () => {
+            const result = usernameSchema.safeParse(value);
+            register.username.error = !result.success
+              ? result.error.issues[0].message
+              : null;
+          },
+
+          password: () => {
+            const result = passwordSchema.safeParse(value);
+            register.password.error = !result.success
+              ? result.error.issues[0].message
+              : null;
+
+            if (register.confirmPassword.value) {
+              register.confirmPassword.error =
+                value !== register.confirmPassword.value
+                  ? "Passwords do not match."
+                  : null;
+            }
+          },
+
+          confirmPassword: () => {
+            register.confirmPassword.error =
+              value !== register.password.value
+                ? "Passwords do not match."
+                : null;
+          },
+        };
+
+        validators[field]();
       },
       undefined,
       "setRegisterFormField"

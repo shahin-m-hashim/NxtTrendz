@@ -209,7 +209,7 @@ export default function RegisterPage() {
         )}
       </form>
 
-      <Link to="/login" className="text-[#0b69ff]">
+      <Link to="/auth/login" className="text-[#0b69ff]">
         Already have an account? Log In.
       </Link>
     </>

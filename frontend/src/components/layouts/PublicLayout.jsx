@@ -1,11 +1,14 @@
-import { useLocation, Navigate, Outlet } from "react-router";
+import { Outlet } from "react-router";
+import { Navigate, useLocation } from "react-router";
 
 export default function PublicLayout() {
   console.log("Rendering Public Layout");
 
   const { pathname } = useLocation();
 
-  if (pathname === "/") return <Navigate to="/login" replace={true} />;
+  if (pathname === "/auth") {
+    return <Navigate to="/auth/login" />;
+  }
 
   return (
     <section className="h-screen overflow-auto min-w-[320px] flex flex-col">
