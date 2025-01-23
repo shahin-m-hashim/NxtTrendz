@@ -1,64 +1,47 @@
 import { z } from "zod";
+import { passwordSchema, usernameSchema } from "../models/user.js";
 
-const usernameSchema = z
-  .string()
-  .trim()
-  .nonempty()
-  .min(3)
-  .max(30)
-  .regex(/^(?!\d+$)/)
-  .regex(/^[a-zA-Z0-9_]+$/);
-
-const passwordSchema = z
-  .string()
-  .trim()
-  .nonempty()
-  .min(6)
-  .max(24)
-  .regex(/\d/)
-  .regex(/[a-z]/)
-  .regex(/[A-Z]/)
-  .regex(/[@$!%*?&]/);
-
-const registerSchema = z
+export const registerSchema = z
   .object({
     username: usernameSchema,
     password: passwordSchema,
     confirmPassword: z.string().trim().nonempty("Required."),
   })
+  .strict()
   .refine((data) => data.password === data.confirmPassword, {
     path: ["confirmPassword"],
   });
 
-const loginSchema = z.object({
-  username: usernameSchema,
-  password: passwordSchema,
-});
+export const loginSchema = z
+  .object({
+    username: usernameSchema,
+    password: passwordSchema,
+  })
+  .strict();
 
 export const sanitizeRegister = (req, res, next) => {
-  const result = registerSchema.safeParse(req.body);
-
-  if (!result.success) {
+  try {
+    req.body = registerSchema.parse(req.body);
+    next();
+  } catch (error) {
+    console.log(error.issues);
     return res.status(400).json({
       data: null,
       success: false,
       error: "Invalid form data",
     });
   }
-
-  next();
 };
 
 export const sanitizeLogin = (req, res, next) => {
-  const result = loginSchema.safeParse(req.body);
-
-  if (!result.success) {
+  try {
+    req.body = loginSchema.parse(req.body);
+    next();
+  } catch (error) {
     return res.status(401).json({
       data: null,
       success: false,
       error: "Invalid credentials",
     });
   }
-
-  next();
 };

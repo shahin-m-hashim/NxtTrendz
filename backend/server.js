@@ -6,11 +6,11 @@ import mongoose from "mongoose";
 import cookieParser from "cookie-parser";
 
 import logger from "./middlewares/logger.js";
-
-import authRoute from "./routes/authRoute.js";
+import authorize from "./middlewares/authorize.js";
 import { authLimiter, globalLimiter } from "./middlewares/apiLimiter.js";
 
-import authorize from "./middlewares/authorize.js";
+import authRoute from "./routes/authRoute.js";
+import productRoute from "./routes/productRoute.js";
 
 const server = express();
 const frontendOrigin = process.env.FRONTEND_ORIGIN;
@@ -58,13 +58,7 @@ const startServer = async () => {
 
     server.use(globalLimiter, authorize);
 
-    server.use("/test", (req, res) => {
-      return res.json({
-        data: null,
-        success: true,
-        error: null,
-      });
-    });
+    server.use("/products", productRoute);
 
     server.use("*", (req, res) => {
       res

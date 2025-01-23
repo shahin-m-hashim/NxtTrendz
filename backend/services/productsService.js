@@ -1,0 +1,68 @@
+import Product from "../models/product.js";
+
+export const getProductsService = async (
+  sortBy = "",
+  category = "",
+  search = "",
+  rating = 0
+) => {
+  const aggregationPipeline = [];
+
+  if (search) {
+    aggregationPipeline.push({
+      $search: {
+        index: "product_title",
+        text: {
+          query: search,
+          path: "title",
+          fuzzy: {
+            maxEdits: 2,
+            prefixLength: 2,
+            maxExpansions: 10,
+          },
+        },
+      },
+    });
+  }
+
+  const matchStage = {};
+  if (category) matchStage.category = category;
+  if (rating) matchStage.rating = { $gte: rating };
+
+  if (category || rating) aggregationPipeline.push({ $match: matchStage });
+
+  const sortOption = {};
+  if (sortBy === "PRICE_HIGH") sortOption.price = -1;
+  if (sortBy === "PRICE_LOW") sortOption.price = 1;
+  if (sortBy === "RATING_HIGH") sortOption.rating = -1;
+  if (sortBy === "RATING_LOW") sortOption.rating = 1;
+
+  if (Object.keys(sortOption).length > 0) {
+    aggregationPipeline.push({ $sort: sortOption });
+  }
+
+  const products = await Product.aggregate([
+    ...aggregationPipeline,
+    {
+      $project: {
+        _id: 0,
+        title: 1,
+        brand: 1,
+        price: 1,
+        rating: 1,
+        id: "$_id",
+        image_url: 1,
+      },
+    },
+  ]);
+
+  return products;
+};
+
+export const getProductService = async (id) => {
+  const product = await Product.findById(id).select(
+    "-_id -__v -createdAt -updatedAt"
+  );
+
+  return product;
+};

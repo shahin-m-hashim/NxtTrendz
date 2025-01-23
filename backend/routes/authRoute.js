@@ -1,4 +1,4 @@
-import express from "express";
+import { Router } from "express";
 
 import {
   loginController,
@@ -8,7 +8,7 @@ import {
 
 import { sanitizeLogin, sanitizeRegister } from "../middlewares/sanitizer.js";
 
-const authRoute = express.Router();
+const authRoute = Router();
 
 authRoute.post("/register", sanitizeRegister, registerController);
 
