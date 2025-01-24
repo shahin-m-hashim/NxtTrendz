@@ -1,4 +1,5 @@
 import Product from "../models/product.js";
+import shuffleArray from "../utils/shuffleArray.js";
 
 export const getProductsService = async (
   search = "",
@@ -32,10 +33,10 @@ export const getProductsService = async (
   if (category || rating) aggregationPipeline.push({ $match: matchStage });
 
   const sortOption = {};
-  if (sortBy === "PRICE_HIGH") sortOption.price = -1;
   if (sortBy === "PRICE_LOW") sortOption.price = 1;
-  if (sortBy === "RATING_HIGH") sortOption.rating = -1;
+  if (sortBy === "PRICE_HIGH") sortOption.price = -1;
   if (sortBy === "RATING_LOW") sortOption.rating = 1;
+  if (sortBy === "RATING_HIGH") sortOption.rating = -1;
 
   if (Object.keys(sortOption).length > 0) {
     aggregationPipeline.push({ $sort: sortOption });
@@ -45,12 +46,11 @@ export const getProductsService = async (
     ...aggregationPipeline,
     {
       $project: {
-        _id: 0,
+        _id: 1,
         title: 1,
         brand: 1,
         price: 1,
         rating: 1,
-        id: "$_id",
         image_url: 1,
       },
     },
@@ -61,8 +61,19 @@ export const getProductsService = async (
 
 export const getProductService = async (id) => {
   const product = await Product.findById(id).select(
-    "-_id -__v -createdAt -updatedAt"
+    "-__v -createdAt -updatedAt"
   );
 
-  return product;
+  if (!product) throw new Error("Product not found.");
+
+  let similarProducts = await Product.find({
+    category: product.category,
+    _id: { $ne: id },
+  })
+    .select("_id title brand price rating image_url")
+    .lean();
+
+  similarProducts = shuffleArray(similarProducts).slice(0, 3);
+
+  return { product, similarProducts };
 };
