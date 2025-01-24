@@ -17,7 +17,7 @@ export default function ProductsCategory() {
   };
 
   return (
-    <div className="flex flex-col items-start gap-2 xs:flex-1 md:flex-initial">
+    <div className="flex flex-col items-start gap-4 xs:flex-1 md:flex-initial">
       <h1 className="text-lg font-bold underline underline-offset-4">
         Category
       </h1>

@@ -40,7 +40,7 @@ export default function Products() {
   return (
     <>
       {products?.length > 0 ? (
-        <ul className="grid grid-cols-1 h-[calc(60vh+1rem)] xs:h-[calc(65vh+1rem)] md:h-[calc(100vh-1rem)] gap-4 overflow-auto xs:grid-cols-2 xl:grid-cols-3">
+        <ul className="grid flex-1 grid-cols-1 gap-4 overflow-auto xs:grid-cols-2 xl:grid-cols-3">
           {products.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}

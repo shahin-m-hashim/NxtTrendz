@@ -10,38 +10,37 @@ export default function ProductsPage() {
 
   return (
     <main className="flex flex-col h-screen overflow-auto">
-      <div className="flex items-center flex-1 w-full px-6 pt-20 pb-6 md:px-28 lg:px-48">
-        <div className="flex flex-col w-full gap-6">
+      <div className="flex flex-col items-center flex-1 w-full gap-4 px-6 pt-20 pb-6 md:px-28 lg:px-48">
+        <div className="hidden md:block">
           <img
             alt="exclusive deals banner"
-            className="h-[50vh] hidden md:block"
             src="https://assets.ccbp.in/frontend/react-js/exclusive-deals-banner-img.png"
           />
+        </div>
 
-          <div className="flex flex-col w-full gap-6 md:gap-0 md:flex-row">
-            <div className="flex flex-col gap-6 md:w-[15vw]">
-              <div className="flex gap-4">
-                <SearchProducts />
-                <div className="md:hidden">
-                  <ClearFiltersBtn />
-                </div>
-              </div>
-
-              <div className="flex justify-between gap-4 md:flex-col">
-                <ProductsCategory />
-                <ProductsRating />
-              </div>
-
-              <div className="hidden md:inline">
-                <ClearFiltersBtn />
-              </div>
-            </div>
-
-            <div className="flex flex-col gap-4 md:px-4 md:flex-1">
-              <SortProducts />
-              <Products />
+        <div className="flex items-center justify-between w-full gap-6">
+          <div className="flex w-full md:w-[calc(30%-1.5rem)] gap-4">
+            <SearchProducts />
+            <div className="md:hidden">
+              <ClearFiltersBtn />
             </div>
           </div>
+
+          {window.innerWidth >= 768 && <SortProducts />}
+        </div>
+
+        <div className="flex flex-col w-full h-[calc(100vh+1.5rem)] gap-6 md:gap-0 md:flex-row">
+          <div className="flex md:flex-col flex-shrink-0 md:w-[30%] gap-6">
+            <ProductsCategory />
+            <ProductsRating />
+            <div className="hidden md:block">
+              <ClearFiltersBtn />
+            </div>
+          </div>
+
+          {window.innerWidth < 768 && <SortProducts />}
+
+          <Products />
         </div>
       </div>
     </main>
