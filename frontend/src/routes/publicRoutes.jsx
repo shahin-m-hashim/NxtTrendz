@@ -1,5 +1,6 @@
 import { lazy, Suspense } from "react";
 import PublicLayout from "components/layouts/PublicLayout";
+import ErrorPage from "pages/ErrorPage";
 
 const LoginPage = lazy(() => import("pages/public/LoginPage"));
 const RegisterPage = lazy(() => import("pages/public/RegisterPage"));
@@ -8,6 +9,7 @@ const publicRoutes = [
   {
     path: "auth",
     element: <PublicLayout />,
+    errorElement: <ErrorPage />,
     children: [
       {
         path: "login",

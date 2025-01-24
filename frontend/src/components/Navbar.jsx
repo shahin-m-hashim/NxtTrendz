@@ -33,9 +33,9 @@ export default function Navbar() {
           </li>
 
           <li>
-            <Link to="/">
+            <Link to="products">
               <img
-                alt="home"
+                alt="products"
                 className="xs:hidden size-6"
                 src="https://assets.ccbp.in/frontend/react-js/nxt-trendz-products-icon.png"
               />
@@ -44,9 +44,9 @@ export default function Navbar() {
           </li>
 
           <li>
-            <Link to="/">
+            <Link to="cart">
               <img
-                alt="home"
+                alt="cart"
                 className="xs:hidden size-6"
                 src="https://assets.ccbp.in/frontend/react-js/nxt-trendz-cart-icon.png"
               />

@@ -1,48 +1,49 @@
-import { testApi } from "api/authApi";
-import { useMutation } from "@tanstack/react-query";
+import { useNavigate } from "react-router";
 
 export default function HomePage() {
+  const navigate = useNavigate();
+
   console.log("Rendering Home Page");
 
-  const mutation = useMutation({
-    mutationFn: testApi,
-  });
-
   return (
-    <main className="flex flex-col items-center justify-center md:flex-row md:gap-14">
-      <div className="flex flex-col gap-6 md:flex-1">
-        <h1 className="text-3xl font-bold leading-10 text-black xl:text-5xl">
-          Clothes That Get YOU Noticed
-        </h1>
+    <main className="flex flex-col h-screen overflow-auto">
+      <div className="flex items-center flex-1 w-full px-6 pt-20 pb-10 md:pt-14 md:pb-0 md:px-28 lg:px-48">
+        <div className="flex flex-col items-center justify-center md:flex-row md:gap-14">
+          <div className="flex flex-col gap-6 md:flex-1">
+            <h1 className="text-3xl font-bold leading-10 text-black xl:text-5xl">
+              Clothes That Get YOU Noticed
+            </h1>
 
-        <img
-          alt="home"
-          className="md:hidden size-full"
-          src="https://assets.ccbp.in/frontend/react-js/nxt-trendz-home-img.png"
-        />
+            <img
+              alt="home"
+              className="md:hidden size-full"
+              src="https://assets.ccbp.in/frontend/react-js/nxt-trendz-home-img.png"
+            />
 
-        <p className="text-[#475569] text-lg text-justify">
-          Fashion is part of the daily air and it does not quite help that it
-          changes all the time. Clothes have always been a marker of the era and
-          we are in a revolution. Your fashion makes you been seen and heard
-          that way you are. So, celebrate the seasons new and exciting fashion
-          in your own way.
-        </p>
+            <p className="text-[#475569] text-lg text-justify">
+              Fashion is part of the daily air and it does not quite help that
+              it changes all the time. Clothes have always been a marker of the
+              era and we are in a revolution. Your fashion makes you been seen
+              and heard that way you are. So, celebrate the seasons new and
+              exciting fashion in your own way.
+            </p>
 
-        <button
-          onClick={() => mutation.mutate()}
-          className="w-1/2 px-4 py-2 bg-[#0967d2] text-white rounded-md"
-        >
-          Shop Now
-        </button>
-      </div>
+            <button
+              onClick={() => navigate("products")}
+              className="w-1/2 px-4 py-2 bg-[#0967d2] text-white rounded-md"
+            >
+              Shop Now
+            </button>
+          </div>
 
-      <div className="flex-1 hidden md:flex">
-        <img
-          alt="home"
-          className="size-full"
-          src="https://assets.ccbp.in/frontend/react-js/nxt-trendz-home-img.png"
-        />
+          <div className="flex-1 hidden md:flex">
+            <img
+              alt="home"
+              className="size-full"
+              src="https://assets.ccbp.in/frontend/react-js/nxt-trendz-home-img.png"
+            />
+          </div>
+        </div>
       </div>
     </main>
   );

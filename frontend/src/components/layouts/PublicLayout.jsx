@@ -20,7 +20,7 @@ export default function PublicLayout() {
   return (
     <section className="h-screen overflow-auto min-w-[320px] flex flex-col">
       <main className="flex flex-col items-center justify-center flex-1 w-full p-5 md:p-0 md:flex-row">
-        <div className="flex flex-col items-center justify-around flex-1 gap-5 md:items-end">
+        <div className="flex flex-col items-center flex-1 gap-5 justify-evenly md:items-end">
           <img
             alt="website logo"
             className="w-1/2 md:hidden"
@@ -34,7 +34,7 @@ export default function PublicLayout() {
           />
         </div>
 
-        <div className="flex flex-col justify-center flex-1 w-full gap-3 md:items-center">
+        <div className="flex flex-col justify-center flex-1 w-full gap-4 md:items-center">
           <Outlet />
         </div>
       </main>

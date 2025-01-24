@@ -32,12 +32,3 @@ export const logoutUser = async () => {
     throw new Error(e.response?.data?.error || "Unknown error occurred.");
   }
 };
-
-export const testApi = async () => {
-  try {
-    await api.get("/test");
-  } catch (e) {
-    if (e.response?.status === 401) useStore.getState().logout();
-    throw new Error(e.response?.data?.error || "Unknown error occurred.");
-  }
-};

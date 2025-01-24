@@ -62,7 +62,10 @@ export default function RegisterPage() {
         />
 
         <div className="flex flex-col w-full gap-2">
-          <label htmlFor="username" className="font-semibold text-[#475569]">
+          <label
+            htmlFor="username"
+            className="text-sm font-semibold text-[#475569]"
+          >
             USERNAME
           </label>
           <input
@@ -82,7 +85,10 @@ export default function RegisterPage() {
         </div>
 
         <div className="flex flex-col w-full gap-2">
-          <label htmlFor="password" className="font-semibold text-[#475569]">
+          <label
+            htmlFor="password"
+            className="text-sm font-semibold text-[#475569]"
+          >
             PASSWORD
           </label>
 
@@ -130,7 +136,10 @@ export default function RegisterPage() {
         </div>
 
         <div className="flex flex-col w-full gap-2">
-          <label htmlFor="password" className="font-semibold text-[#475569]">
+          <label
+            htmlFor="password"
+            className="text-sm font-semibold text-[#475569]"
+          >
             CONFIRM PASSWORD
           </label>
 
