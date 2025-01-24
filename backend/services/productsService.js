@@ -1,9 +1,9 @@
 import Product from "../models/product.js";
 
 export const getProductsService = async (
+  search = "",
   sortBy = "",
   category = "",
-  search = "",
   rating = 0
 ) => {
   const aggregationPipeline = [];

@@ -6,13 +6,14 @@ import {
 
 export const getProductsController = async (req, res) => {
   try {
-    const { sort_by, category, title_search, rating } =
-      productQuerySchema.parse(req.query);
+    const { sort_by, category, search, rating } = productQuerySchema.parse(
+      req.query
+    );
 
     const products = await getProductsService(
+      search,
       sort_by,
       category,
-      title_search,
       Number(rating)
     );
 

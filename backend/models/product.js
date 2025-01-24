@@ -3,25 +3,16 @@ import { Schema, model } from "mongoose";
 
 export const productQuerySchema = z
   .object({
-    sort_by: z.enum([
-      "",
-      "PRICE_HIGH",
-      "PRICE_LOW",
-      "RATING_HIGH",
-      "RATING_LOW",
-    ]),
+    sort_by: z
+      .enum(["", "PRICE_HIGH", "PRICE_LOW", "RATING_HIGH", "RATING_LOW"])
+      .optional(),
 
-    category: z.enum([
-      "",
-      "clothing",
-      "appliances",
-      "electronics",
-      "grocery",
-      "toys",
-    ]),
+    category: z
+      .enum(["", "clothing", "appliances", "electronics", "grocery", "toys"])
+      .optional(),
 
-    title_search: z.string().trim().max(100).default(""),
-    rating: z.coerce.number().gte(0).lte(5).default(0),
+    search: z.string().trim().max(100).default("").optional(),
+    rating: z.coerce.number().gte(0).lte(5).default(0).optional(),
   })
   .strict();
 
