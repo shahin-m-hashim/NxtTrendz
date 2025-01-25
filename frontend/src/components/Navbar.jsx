@@ -3,14 +3,14 @@ import { logoutUser } from "api/authApi";
 import { useMutation } from "@tanstack/react-query";
 
 export default function Navbar() {
-  console.log("Rendering Navbar");
-
   const mutation = useMutation({
     mutationFn: logoutUser,
   });
 
+  // console.log("Rendering Navbar");
+
   return (
-    <nav className="fixed w-full bg-[#FFFAF0] border-b-2 border-b-[#e2e8f0] h-14">
+    <nav className="fixed z-50 w-full bg-[#FFFAF0] border-b-2 border-b-[#e2e8f0] h-14">
       <div className="flex items-center justify-between px-6 size-full md:px-28 lg:px-48">
         <Link to="/">
           <img

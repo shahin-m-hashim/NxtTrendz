@@ -1,19 +1,16 @@
 import { cn } from "utils/cn";
 import { useSearchParams } from "react-router";
-import { getQueryParams } from "utils/queryParams";
-import { useQueryClient } from "@tanstack/react-query";
+import { getAllQueryParams, getQueryParam } from "utils/queryParams";
 
 const categories = ["clothing", "electronics", "appliances", "grocery", "toys"];
 
 export default function ProductsCategory() {
-  const queryClient = useQueryClient();
   const [, setSearchParams] = useSearchParams();
-  const activeCategory = getQueryParams().category || "";
+  const activeCategory = getQueryParam("category");
 
   const handleClick = (category) => {
-    const existingQueryParams = getQueryParams();
+    const existingQueryParams = getAllQueryParams();
     setSearchParams({ ...existingQueryParams, category });
-    queryClient.invalidateQueries(["products"]);
   };
 
   return (

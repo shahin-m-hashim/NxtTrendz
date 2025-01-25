@@ -8,6 +8,7 @@
       "utils": ["utils"],
       "routes": ["routes"],
       "schemas": ["schemas"],
+      "providers": ["providers"],
       "components": ["components"]
     }
   },

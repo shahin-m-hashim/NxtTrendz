@@ -1,46 +1,59 @@
+import { useEffect } from "react";
+import { useContext } from "react";
 import useStore from "store/_store";
-import { useShallow } from "zustand/shallow";
 import { getProducts } from "api/productsApi";
+import { useSearchParams } from "react-router";
 import { useQuery } from "@tanstack/react-query";
 import { ThreeDots } from "react-loader-spinner";
+import GlobalContext from "providers/GlobalProvider";
 import ProductCard from "components/products/ProductCard";
 import ProductsError from "components/products/ProductsError";
 
 export default function Products() {
-  const [products, isSearchDebouncing] = useStore(
-    useShallow((state) => [
-      state.products.items,
-      state.products.isSearchDebouncing,
-    ])
-  );
+  const [searchParams] = useSearchParams();
+  const setProducts = useStore((store) => store.setProducts);
+  const { searchProductInputRef } = useContext(GlobalContext);
 
-  const productsQuery = useQuery({
+  const rating = searchParams.get("rating") || 0;
+  const search = searchParams.get("search") || "";
+  const sortBy = searchParams.get("sort_by") || "";
+  const category = searchParams.get("category") || "";
+
+  const {
+    isError,
+    isFetched,
+    isFetching,
+    data: products,
+  } = useQuery({
     queryFn: getProducts,
-    queryKey: ["products"],
+    queryKey: ["products", search, rating, sortBy, category],
   });
 
-  if (
-    productsQuery.isLoading ||
-    productsQuery.isFetching ||
-    isSearchDebouncing
-  ) {
+  useEffect(() => {
+    if (isFetched && products) {
+      setProducts(products);
+      searchProductInputRef.current.value = search;
+    }
+  }, [products]);
+
+  if (isFetching) {
     return (
       <ThreeDots
         color="#0967d2"
         ariaLabel="loading-products"
-        wrapperClass="flex flex-col items-center justify-center flex-1"
+        wrapperClass="h-3/4 flex flex-col items-center justify-center flex-1"
       />
     );
   }
 
-  if (productsQuery.isError) return <ProductsError />;
+  if (isError) return <ProductsError />;
 
   console.log("Rendering Products");
 
   return (
     <>
       {products?.length > 0 ? (
-        <ul className="grid flex-1 grid-cols-1 gap-4 overflow-auto xs:grid-cols-2 xl:grid-cols-3">
+        <ul className="grid h-full grid-cols-1 gap-4 overflow-auto xs:grid-cols-2 xl:grid-cols-3">
           {products.map((product) => (
             <ProductCard key={product._id} product={product} />
           ))}

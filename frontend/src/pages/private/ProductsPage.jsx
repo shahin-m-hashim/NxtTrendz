@@ -1,12 +1,13 @@
 import Products from "components/Products";
 import SortProducts from "components/products/SortProducts";
+import SearchLoader from "components/products/SearchLoader";
 import ProductsRating from "components/products/ProductsRating";
 import SearchProducts from "components/products/SearchProducts";
 import ClearFiltersBtn from "components/products/ClearFiltersBtn";
 import ProductsCategory from "components/products/ProductsCategory";
 
 export default function ProductsPage() {
-  console.log("Rendering Products Page");
+  // console.log("Rendering Products Page");
 
   return (
     <main className="flex flex-col h-screen overflow-auto">
@@ -40,7 +41,10 @@ export default function ProductsPage() {
 
           {window.innerWidth < 768 && <SortProducts />}
 
-          <Products />
+          <div className="relative flex-1">
+            <SearchLoader />
+            <Products />
+          </div>
         </div>
       </div>
     </main>

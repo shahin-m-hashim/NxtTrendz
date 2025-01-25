@@ -9,7 +9,7 @@ export default function PrivateLayout() {
     return <Navigate to="/auth/login" replace />;
   }
 
-  console.log("Rendering Private Layout");
+  // console.log("Rendering Private Layout");
 
   return (
     <section className="min-w-[320px]">

@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import useStore from "store/_store";
 import { useParams } from "react-router";
 import { getProduct } from "api/productsApi";
@@ -11,20 +12,22 @@ export default function ProductPage() {
 
   const setProduct = useStore((state) => state.setProduct);
 
-  const { data, isLoading, isError, isFetching, isFetched } = useQuery({
+  const { data, isFetching, isError, isFetched } = useQuery({
     queryKey: ["products", id],
     queryFn: () => getProduct(id),
   });
 
-  if (isLoading || isFetching) {
+  useEffect(() => {
+    if (isFetched) setProduct(data.product);
+  }, [data]);
+
+  if (isFetching) {
     return (
       <ThreeDots color="#0967d2" ariaLabel="loading-products" wrapperClass="" />
     );
   }
 
   if (isError) return <ProductError />;
-
-  if (isFetched) setProduct(data.product);
 
   console.log("Rendering Product Page");
 

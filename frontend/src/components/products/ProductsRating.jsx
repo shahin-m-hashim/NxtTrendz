@@ -1,7 +1,6 @@
 import { cn } from "utils/cn";
 import { useSearchParams } from "react-router";
-import { getQueryParams } from "utils/queryParams";
-import { useQueryClient } from "@tanstack/react-query";
+import { getAllQueryParams, getQueryParam } from "utils/queryParams";
 
 const ratingsList = [
   {
@@ -27,14 +26,12 @@ const ratingsList = [
 ];
 
 export default function ProductsRating() {
-  const queryClient = useQueryClient();
   const [, setSearchParams] = useSearchParams();
-  const activeRating = getQueryParams().rating || "";
+  const activeRating = getQueryParam("rating") || 0;
 
   const handleClick = (rating) => {
-    const existingQueryParams = getQueryParams();
+    const existingQueryParams = getAllQueryParams();
     setSearchParams({ ...existingQueryParams, rating });
-    queryClient.invalidateQueries(["products"]);
   };
 
   return (

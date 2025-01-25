@@ -1,6 +1,5 @@
 import { useSearchParams } from "react-router";
-import { getQueryParams } from "utils/queryParams";
-import { useQueryClient } from "@tanstack/react-query";
+import { getAllQueryParams, getQueryParam } from "utils/queryParams";
 
 const sortbyOptions = [
   {
@@ -26,12 +25,11 @@ const sortbyOptions = [
 ];
 
 export default function SortProducts() {
-  const queryClient = useQueryClient();
   const [, setSearchParams] = useSearchParams();
-  const activeSort = getQueryParams().sort_by || "";
+  const activeSort = getQueryParam("sort_by") || "";
 
   const handleChange = (e) => {
-    const existingQueryParams = getQueryParams();
+    const existingQueryParams = getAllQueryParams();
     if (e.target.value) {
       setSearchParams({ ...existingQueryParams, sort_by: e.target.value });
     } else {
@@ -39,7 +37,6 @@ export default function SortProducts() {
       const { sort_by, ...rest } = existingQueryParams;
       setSearchParams(rest);
     }
-    queryClient.invalidateQueries(["products"]);
   };
 
   return (

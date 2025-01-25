@@ -1,52 +1,49 @@
-import { useRef } from "react";
-import { useEffect } from "react";
+import { useContext } from "react";
 import useStore from "store/_store";
-import { useShallow } from "zustand/shallow";
 import { useSearchParams } from "react-router";
-import { getQueryParams } from "utils/queryParams";
-import { useQueryClient } from "@tanstack/react-query";
+import GlobalContext from "providers/GlobalProvider";
+import { getAllQueryParams } from "utils/queryParams";
 
 export default function SearchProducts() {
-  const debounceTimer = useRef();
-  const queryClient = useQueryClient();
   const [, setSearchParams] = useSearchParams();
 
-  const [searchKeyword, setProductsSearchKeyword] = useStore(
-    useShallow((s) => [s.products.searchKeyword, s.setProductsSearchKeyword])
+  const { searchProductInputRef, productSearchDebounceTimerRef } =
+    useContext(GlobalContext);
+
+  const setIsSearchingProduct = useStore(
+    (state) => state.setIsSearchingProduct
   );
 
-  const handleChange = (e) => {
-    const newSearchValue = e.target.value;
-    setProductsSearchKeyword(newSearchValue);
+  const handleChange = () => {
+    const newSearchValue = searchProductInputRef.current.value;
+    const existingQueryParams = getAllQueryParams();
 
-    if (debounceTimer.current) clearTimeout(debounceTimer.current);
+    clearTimeout(productSearchDebounceTimerRef.current);
 
-    debounceTimer.current = setTimeout(() => {
-      const existingQueryParams = getQueryParams();
-      if (newSearchValue) {
-        setSearchParams({ ...existingQueryParams, search: newSearchValue });
-      } else {
-        // eslint-disable-next-line no-unused-vars
-        const { search, ...rest } = existingQueryParams;
-        setSearchParams(rest);
-      }
-      queryClient.invalidateQueries(["products"]);
-    }, 600);
+    if (!newSearchValue) {
+      // eslint-disable-next-line no-unused-vars
+      const { search, ...rest } = existingQueryParams;
+      setSearchParams(rest);
+      return;
+    }
+
+    setIsSearchingProduct(true);
+
+    productSearchDebounceTimerRef.current = setTimeout(() => {
+      setSearchParams({ ...existingQueryParams, search: newSearchValue });
+    }, 500);
   };
-
-  useEffect(() => {
-    return () => clearTimeout(debounceTimer.current);
-  }, []);
 
   return (
     <div className="flex items-center w-full overflow-hidden border border-gray-300 rounded-md">
       <input
         type="search"
+        autoComplete="off"
         id="search-products"
         placeholder="Search"
-        value={searchKeyword}
         name="search-products"
         onChange={handleChange}
+        ref={searchProductInputRef}
         className="w-full p-2 outline-none"
       />
 

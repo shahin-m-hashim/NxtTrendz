@@ -2,7 +2,7 @@ export default function ProductsError() {
   console.log("Rendering Products Error");
 
   return (
-    <div className="flex flex-col items-center justify-center flex-1 gap-6 text-center">
+    <div className="flex flex-col items-center justify-center gap-6 pt-10 text-center">
       <img
         alt="products error"
         className="h-[40vh] pr-10"
