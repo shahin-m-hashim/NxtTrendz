@@ -7,7 +7,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import ErrorPage from "pages/ErrorPage";
 import ErrorBoundary from "components/wrappers/ErrorBoundary";
-// import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -15,6 +15,7 @@ const queryClient = new QueryClient({
       refetchOnMount: false,
       refetchOnWindowFocus: false,
       staleTime: 1 * 60 * 60 * 1000, // 1 hour
+      cacheTime: 10 * 60 * 1000, // 10 minutes
     },
   },
 });
@@ -22,9 +23,9 @@ const queryClient = new QueryClient({
 createRoot(document.getElementById("root")).render(
   // <StrictMode>
   <ErrorBoundary fallback={<ErrorPage />}>
-    <QueryClientProvider op client={queryClient}>
+    <QueryClientProvider client={queryClient}>
       <App />
-      {/* <ReactQueryDevtools /> */}
+      <ReactQueryDevtools />
     </QueryClientProvider>
   </ErrorBoundary>
   // </StrictMode>

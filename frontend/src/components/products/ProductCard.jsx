@@ -1,10 +1,15 @@
+import { Link } from "react-router";
+
 export default function ProductCard({ product }) {
   return (
-    <div className="h-fit rounded-b-md bg-[#e9e9e9]">
+    <Link
+      to={`/products/${product._id}`}
+      className="h-fit rounded-b-md bg-[#e9e9e9]"
+    >
       <img
         alt={product.title}
-        className="rounded-t-md"
         src={product.image_url}
+        className="rounded-t-md"
       />
 
       <div className="flex flex-col gap-2 p-2">
@@ -23,6 +28,6 @@ export default function ProductCard({ product }) {
           </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }

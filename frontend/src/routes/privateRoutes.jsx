@@ -1,5 +1,6 @@
 import { Suspense, lazy } from "react";
 import ErrorPage from "pages/ErrorPage";
+import ProductPage from "pages/private/ProductPage";
 import PrivateLayout from "components/layouts/PrivateLayout";
 
 const HomePage = lazy(() => import("pages/private/HomePage"));
@@ -27,6 +28,10 @@ const privateRoutes = [
             <ProductsPage />
           </Suspense>
         ),
+      },
+      {
+        path: "products/:id",
+        element: <ProductPage />,
       },
     ],
   },

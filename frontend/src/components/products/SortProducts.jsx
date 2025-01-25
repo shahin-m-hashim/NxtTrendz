@@ -43,10 +43,10 @@ export default function SortProducts() {
   };
 
   return (
-    <div className="flex flex-col justify-between flex-1 h-8 gap-4 xs:flex-row">
+    <div className="flex flex-col justify-between gap-4 md:flex-1 xs:flex-row">
       <h1 className="text-2xl font-bold">Products</h1>
 
-      <div className="flex justify-between flex-1">
+      <div className="flex justify-between flex-1 gap-4 xs:flex-initial">
         <div className="flex items-center gap-2">
           <img src="icons/sort.svg" alt="sort" className="size-6" />
           <label htmlFor="sort">Sort By</label>
@@ -57,7 +57,7 @@ export default function SortProducts() {
           name="sort"
           value={activeSort}
           onChange={handleChange}
-          className="h-full px-2 border border-gray-400 rounded-md"
+          className="h-8 px-2 border border-gray-400 rounded-md"
         >
           {sortbyOptions.map((option) => (
             <option value={option.optionId} key={option.optionId}>

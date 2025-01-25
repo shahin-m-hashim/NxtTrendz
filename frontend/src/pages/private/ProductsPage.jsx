@@ -19,7 +19,7 @@ export default function ProductsPage() {
         </div>
 
         <div className="flex items-center justify-between w-full gap-6">
-          <div className="flex w-full md:w-[calc(30%-1.5rem)] gap-4">
+          <div className="flex w-full h-10 md:w-[calc(30%-1.5rem)] gap-4">
             <SearchProducts />
             <div className="md:hidden">
               <ClearFiltersBtn />

@@ -3,6 +3,8 @@ import { getQueryParams } from "utils/queryParams";
 const createProductsSlice = (set) => {
   return {
     products: {
+      cart: {},
+      item: null,
       items: null,
       isSearchDebouncing: false,
       searchKeyword: getQueryParams().search || "",
@@ -18,6 +20,15 @@ const createProductsSlice = (set) => {
         },
         undefined,
         "setProducts"
+      ),
+
+    setProduct: (product) =>
+      set(
+        (state) => {
+          state.products.item = product;
+        },
+        undefined,
+        "setProduct"
       ),
 
     setProductsSearchKeyword: (searchKeyword) =>

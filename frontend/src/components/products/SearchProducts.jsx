@@ -39,7 +39,7 @@ export default function SearchProducts() {
   }, []);
 
   return (
-    <div className="flex items-center w-full h-10 overflow-hidden border border-gray-300 rounded-md">
+    <div className="flex items-center w-full overflow-hidden border border-gray-300 rounded-md">
       <input
         type="search"
         id="search-products"
