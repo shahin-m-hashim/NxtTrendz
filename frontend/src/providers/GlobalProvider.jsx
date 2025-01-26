@@ -5,8 +5,17 @@ import { createContext } from "react";
 const GlobalContext = createContext();
 
 export const GlobalProvider = ({ children }) => {
+  const checkoutModalRef = useRef();
   const searchProductInputRef = useRef();
   const productSearchDebounceTimerRef = useRef();
+
+  const setShowCheckoutModal = (show) => {
+    if (show) {
+      checkoutModalRef.current.classList.remove("hidden");
+    } else {
+      checkoutModalRef.current.classList.add("hidden");
+    }
+  };
 
   useEffect(() => {
     return () => clearTimeout(productSearchDebounceTimerRef.current);
@@ -15,6 +24,8 @@ export const GlobalProvider = ({ children }) => {
   return (
     <GlobalContext.Provider
       value={{
+        checkoutModalRef,
+        setShowCheckoutModal,
         searchProductInputRef,
         productSearchDebounceTimerRef,
       }}

@@ -4,7 +4,7 @@ import ProductPage from "pages/private/ProductPage";
 import PrivateLayout from "components/layouts/PrivateLayout";
 
 const HomePage = lazy(() => import("pages/private/HomePage"));
-
+const CartPage = lazy(() => import("pages/private/CartPage"));
 const ProductsPage = lazy(() => import("pages/private/ProductsPage"));
 
 const privateRoutes = [
@@ -31,7 +31,19 @@ const privateRoutes = [
       },
       {
         path: "products/:id",
-        element: <ProductPage />,
+        element: (
+          <Suspense>
+            <ProductPage />
+          </Suspense>
+        ),
+      },
+      {
+        path: "cart",
+        element: (
+          <Suspense>
+            <CartPage />
+          </Suspense>
+        ),
       },
     ],
   },

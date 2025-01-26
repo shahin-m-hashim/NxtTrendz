@@ -1,8 +1,6 @@
 const createProductsSlice = (set) => ({
   products: {
-    cart: {},
     total: 0,
-    item: null,
     items: null,
     isSearching: false,
   },
@@ -16,15 +14,6 @@ const createProductsSlice = (set) => ({
       },
       undefined,
       "setProducts"
-    ),
-
-  setProduct: (product) =>
-    set(
-      (state) => {
-        state.products.item = product;
-      },
-      undefined,
-      "setProduct"
     ),
 
   setIsSearchingProduct: (isSearching) =>

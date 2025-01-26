@@ -3,14 +3,18 @@ import { devtools } from "zustand/middleware";
 import { immer } from "zustand/middleware/immer";
 
 import createAuthSlice from "store/authSlice";
+import createCartSlice from "store/cartSlice";
 import createFormsSlice from "store/formsSlice";
+import createProductSlice from "store/productSlice";
 import createProductsSlice from "store/productsSlice";
 
 const useStore = create(
   devtools(
     immer((set, get) => ({
       ...createAuthSlice(set, get),
+      ...createCartSlice(set, get),
       ...createFormsSlice(set, get),
+      ...createProductSlice(set, get),
       ...createProductsSlice(set, get),
     })),
     {

@@ -1,10 +1,10 @@
-import { Link } from "react-router";
+import ShopNowLink from "components/ShopNowLink";
 
 export default function ProductError() {
   console.log("Rendering Product Error");
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen gap-6 px-6 text-center ">
+    <div className="flex flex-col items-center justify-center h-screen gap-6 px-6 text-center">
       <img
         alt="product error"
         className="h-[40vh]"
@@ -18,12 +18,7 @@ export default function ProductError() {
         temporarily unavailable.
       </p>
 
-      <Link
-        to="/products"
-        className="font-semibold border text-white bg-[#0967d2] rounded-md px-4 py-2"
-      >
-        Continue Shopping
-      </Link>
+      <ShopNowLink />
     </div>
   );
 }

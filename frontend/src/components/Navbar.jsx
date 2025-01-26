@@ -1,6 +1,7 @@
 import { Link } from "react-router";
 import { logoutUser } from "api/authApi";
 import { useMutation } from "@tanstack/react-query";
+import CartLink from "components/cart/CartLink";
 
 export default function Navbar() {
   const mutation = useMutation({
@@ -43,16 +44,7 @@ export default function Navbar() {
             </Link>
           </li>
 
-          <li>
-            <Link to="cart">
-              <img
-                alt="cart"
-                className="xs:hidden size-6"
-                src="https://assets.ccbp.in/frontend/react-js/nxt-trendz-cart-icon.png"
-              />
-              <span className="hidden xs:inline">Cart</span>
-            </Link>
-          </li>
+          <CartLink />
 
           <li className="xs:bg-[#0967d2] xs:py-1 xs:px-3 rounded-md">
             <button

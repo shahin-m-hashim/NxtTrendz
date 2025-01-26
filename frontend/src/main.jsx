@@ -25,7 +25,7 @@ createRoot(document.getElementById("root")).render(
     <GlobalProvider>
       <QueryClientProvider client={queryClient}>
         <App />
-        <ReactQueryDevtools />
+        {/* <ReactQueryDevtools /> */}
       </QueryClientProvider>
     </GlobalProvider>
   </ErrorBoundary>

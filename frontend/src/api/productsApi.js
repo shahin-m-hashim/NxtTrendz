@@ -14,6 +14,7 @@ export const getProducts = async () => {
 
 export const getProduct = async (id) => {
   try {
+    await new Promise((resolve) => setTimeout(resolve, 100));
     const res = await api.get(`/products/${id}`);
     return res.data?.data;
   } catch (e) {

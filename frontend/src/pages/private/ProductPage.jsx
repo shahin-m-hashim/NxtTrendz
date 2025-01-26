@@ -4,6 +4,7 @@ import { useParams } from "react-router";
 import { getProduct } from "api/productsApi";
 import { ThreeDots } from "react-loader-spinner";
 import { useQuery } from "@tanstack/react-query";
+import CartSection from "components/product/CartSection";
 import ProductCard from "components/products/ProductCard";
 import ProductError from "components/product/ProductError";
 
@@ -23,13 +24,17 @@ export default function ProductPage() {
 
   if (isFetching) {
     return (
-      <ThreeDots color="#0967d2" ariaLabel="loading-products" wrapperClass="" />
+      <ThreeDots
+        color="#0967d2"
+        ariaLabel="loading-product"
+        wrapperClass="h-screen w-full flex items-center justify-center"
+      />
     );
   }
 
   if (isError) return <ProductError />;
 
-  console.log("Rendering Product Page");
+  // console.log("Rendering Product Page");
 
   return (
     <main className="flex flex-col h-screen overflow-auto">
@@ -64,44 +69,34 @@ export default function ProductPage() {
                 {data.product.description}
               </p>
 
-              <span>
-                <span className="font-semibold">Availability: </span>
+              <div className="flex justify-between">
                 <span>
-                  {data.product.in_stock ? "In Stock" : "Out of Stock"}
+                  <span className="font-semibold">Availability: </span>
+                  <span>
+                    {data.product.in_stock ? "In Stock" : "Out of Stock"}
+                  </span>
                 </span>
-              </span>
 
-              <span>
-                <span className="font-semibold">Brand: </span>
-                <span>{data.product.brand}</span>
-              </span>
+                <span>
+                  <span className="font-semibold">Brand: </span>
+                  <span>{data.product.brand}</span>
+                </span>
+              </div>
+
+              <div className="flex justify-between gap-4">
+                <span>
+                  <span className="font-semibold">Sold Out: </span>
+                  <span>{data.product.sold}</span>
+                </span>
+
+                <span>
+                  <span className="font-semibold">Still Remaining: </span>
+                  <span>{data.product.remaining}</span>
+                </span>
+              </div>
 
               <hr className="h-0.5 bg-[#cbced2]" />
-
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                  <button
-                    type="button"
-                    className="font-semibold border border-[#0967d2] text-[#0967d2] rounded-sm p-1"
-                  >
-                    <img src="icons/minus.svg" className="size-4" alt="minus" />
-                  </button>
-                  <span>0</span>
-                  <button
-                    type="button"
-                    className="font-semibold border border-[#0967d2] text-[#0967d2] rounded-sm p-1"
-                  >
-                    <img src="icons/plus.svg" className="size-4" alt="plus" />
-                  </button>
-                </div>
-
-                <button
-                  type="button"
-                  className="bg-[#0967d2] text-base text-white px-4 py-2 rounded-md"
-                >
-                  Add to Cart
-                </button>
-              </div>
+              <CartSection />
             </div>
           </div>
         </div>
