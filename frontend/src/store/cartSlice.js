@@ -2,6 +2,7 @@ const initialState = {
   cart: [],
   totalPrice: 0,
   totalProducts: 0,
+  paymentMethod: null,
 };
 
 const initialCartSlice =
@@ -19,7 +20,7 @@ const createCartSlice = (set) => {
 
           if (!product || quantity <= 0) return;
 
-          const { _id, image_url, title, brand, price } = product;
+          const { _id, image_url, title, brand, price, remaining } = product;
 
           store.cartSlice.cart.push({
             title,
@@ -27,6 +28,7 @@ const createCartSlice = (set) => {
             id: _id,
             quantity,
             image_url,
+            remaining,
             price: price,
             totalPrice: price * quantity,
           });
@@ -65,7 +67,8 @@ const createCartSlice = (set) => {
       set(
         (state) => {
           const product = state.cartSlice.cart.find((p) => p.id === id);
-          if (!product) return;
+
+          if (!product || product.quantity >= product.remaining) return;
 
           product.quantity++;
           state.cartSlice.totalProducts++;
@@ -103,6 +106,15 @@ const createCartSlice = (set) => {
         },
         undefined,
         "emptyCart"
+      ),
+
+    setPaymentMethod: (paymentMethod) =>
+      set(
+        (state) => {
+          state.cartSlice.paymentMethod = paymentMethod;
+        },
+        undefined,
+        "setPaymentMethod"
       ),
   };
 };

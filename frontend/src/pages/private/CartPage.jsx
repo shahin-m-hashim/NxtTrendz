@@ -1,18 +1,15 @@
 import { useContext } from "react";
 import useStore from "store/_store";
+import CartItem from "components/cart/CartItem";
 import GlobalContext from "providers/GlobalProvider";
 import EmptyCart from "components/cart/EmptyCartView";
 import EmptyCartBtn from "components/cart/EmptyCartBtn";
-import RemoveFromCart from "components/cart/RemoveFromCart";
 import CheckoutModal from "components/modals/CheckoutModal";
-import QuantityController from "components/QuantityController";
 
 export default function CartPage() {
   const cart = useStore((store) => store.cartSlice.cart);
   const { setShowCheckoutModal } = useContext(GlobalContext);
   const totalPrice = useStore((store) => store.cartSlice.totalPrice);
-  const increaseQuantity = useStore((store) => store.increaseProductQuantity);
-  const decreaseQuantity = useStore((store) => store.decreaseProductQuantity);
 
   console.log("Rendering Cart Page");
 
@@ -44,59 +41,7 @@ export default function CartPage() {
 
               <ul className="flex flex-col gap-4">
                 {cart.map((product) => (
-                  <div
-                    key={product.id}
-                    className="flex items-center justify-between p-2 xs:p-5 rounded-md shadow-lg border border-[#e9e9e9]"
-                  >
-                    <div className="flex items-center gap-4">
-                      <img
-                        alt={product.id}
-                        src={product.image_url}
-                        className="rounded-md size-20 xs:size-32"
-                      />
-
-                      <div className="flex flex-col gap-4">
-                        <div className="flex flex-col gap-2">
-                          <h1 className="text-lg font-bold">{product.title}</h1>
-                          <p>by {product.brand}</p>
-                        </div>
-
-                        <div className="md:hidden">
-                          <QuantityController
-                            quantity={product.quantity}
-                            increaseQuantity={() =>
-                              increaseQuantity(product.id)
-                            }
-                            decreaseQuantity={() =>
-                              decreaseQuantity(product.id)
-                            }
-                          />
-                        </div>
-
-                        <div className="xs:hidden">
-                          <span className="text-[#0967d2] font-semibold">
-                            Rs {product.totalPrice}/-
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="hidden md:inline-block">
-                      <QuantityController
-                        quantity={product.quantity}
-                        increaseQuantity={() => increaseQuantity(product.id)}
-                        decreaseQuantity={() => decreaseQuantity(product.id)}
-                      />
-                    </div>
-
-                    <div className="hidden xs:inline">
-                      <span className="text-[#0967d2] font-semibold">
-                        Rs {product.totalPrice}/-
-                      </span>
-                    </div>
-
-                    <RemoveFromCart id={product.id} />
-                  </div>
+                  <CartItem key={product.id} product={product} />
                 ))}
               </ul>
             </div>
