@@ -1,5 +1,4 @@
 import { useRef } from "react";
-import { useEffect } from "react";
 import { createContext } from "react";
 
 const GlobalContext = createContext();
@@ -7,7 +6,6 @@ const GlobalContext = createContext();
 export const GlobalProvider = ({ children }) => {
   const checkoutModalRef = useRef();
   const searchProductInputRef = useRef();
-  const productSearchDebounceTimerRef = useRef();
 
   const setShowCheckoutModal = (show) => {
     if (show) {
@@ -17,17 +15,12 @@ export const GlobalProvider = ({ children }) => {
     }
   };
 
-  useEffect(() => {
-    return () => clearTimeout(productSearchDebounceTimerRef.current);
-  }, []);
-
   return (
     <GlobalContext.Provider
       value={{
         checkoutModalRef,
         setShowCheckoutModal,
         searchProductInputRef,
-        productSearchDebounceTimerRef,
       }}
     >
       {children}

@@ -1,45 +1,33 @@
-function updateUrl(queryParams) {
-  if (queryParams.toString()) {
-    window.history.replaceState(
-      null,
-      "",
-      `${window.location.pathname}?${queryParams.toString()}`
-    );
-  } else {
-    window.history.pushState(null, "", `${window.location.pathname}`);
-  }
-}
-
 // Getters
-export function getQueryParam(key) {
+export function getQueryParam(key = "") {
   if (!key) return null;
   const queryParams = new URLSearchParams(window.location.search);
   return queryParams.get(key);
 }
 
-export function getQueryParams(keys) {
+export function getQueryParams(keys = []) {
   if (!Array.isArray(keys)) return {};
-  const queryParams = new URLSearchParams(window.location.search);
-  const params = {};
+
+  const queryParams = {};
+  const existingQueryParams = new URLSearchParams(window.location.search);
   keys.forEach((key) => {
-    if (key) params[key] = queryParams.get(key);
+    if (key) queryParams[key] = existingQueryParams.get(key);
   });
-  return params;
+  return queryParams || {};
 }
 
 export function getAllQueryParams() {
-  const queryParams = new URLSearchParams(window.location.search);
-  const params = {};
-  queryParams.forEach((value, key) => {
-    if (value) params[key] = value;
+  const queryParams = {};
+  const existingQueryParams = new URLSearchParams(window.location.search);
+  existingQueryParams.forEach((value, key) => {
+    if (value) queryParams[key] = value;
   });
-  return params;
+  return queryParams || {};
 }
 
 // Setters
-export function setQueryParam(key, value) {
+export function setQueryParam(key = "", value = "") {
   if (!key || value === undefined || value === null) return;
-
   const queryParams = new URLSearchParams(window.location.search);
 
   if (value === "") {
@@ -48,10 +36,10 @@ export function setQueryParam(key, value) {
     queryParams.set(key, value);
   }
 
-  updateUrl(queryParams);
+  return queryParams || {};
 }
 
-export function setQueryParams(params) {
+export function setQueryParams(params = []) {
   if (!params || typeof params !== "object") return;
 
   const queryParams = new URLSearchParams(window.location.search);
@@ -68,20 +56,20 @@ export function setQueryParams(params) {
     }
   });
 
-  updateUrl(queryParams);
+  return queryParams || {};
 }
 
 // Removers
-export function removeQueryParam(key) {
+export function removeQueryParam(key = "") {
   if (!key) return;
 
   const queryParams = new URLSearchParams(window.location.search);
   queryParams.delete(key);
 
-  updateUrl(queryParams);
+  return queryParams || {};
 }
 
-export function removeQueryParams(keys) {
+export function removeQueryParams(keys = []) {
   if (!Array.isArray(keys)) return;
 
   const queryParams = new URLSearchParams(window.location.search);
@@ -89,10 +77,10 @@ export function removeQueryParams(keys) {
     if (key) queryParams.delete(key);
   });
 
-  updateUrl(queryParams);
+  return queryParams || {};
 }
 
 export function clearQueryParams() {
   const queryParams = new URLSearchParams();
-  updateUrl(queryParams);
+  return queryParams || {};
 }

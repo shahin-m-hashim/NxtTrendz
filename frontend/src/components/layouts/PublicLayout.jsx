@@ -15,7 +15,7 @@ export default function PublicLayout() {
     return <Navigate to="/auth/login" />;
   }
 
-  console.log("Rendering Public Layout");
+  // console.log("Rendering Public Layout");
 
   return (
     <section className="h-screen overflow-auto min-w-[320px] flex flex-col">

@@ -1,6 +1,5 @@
 import Products from "components/Products";
 import SortProducts from "components/products/SortProducts";
-import SearchLoader from "components/products/SearchLoader";
 import ProductsRating from "components/products/ProductsRating";
 import SearchProducts from "components/products/SearchProducts";
 import ClearFiltersBtn from "components/products/ClearFiltersBtn";
@@ -41,10 +40,7 @@ export default function ProductsPage() {
 
           {window.innerWidth < 768 && <SortProducts />}
 
-          <div className="relative flex-1">
-            <SearchLoader />
-            <Products />
-          </div>
+          <Products />
         </div>
       </div>
     </main>

@@ -8,7 +8,7 @@ import { useMutation } from "@tanstack/react-query";
 import { RotatingLines } from "react-loader-spinner";
 
 export default function RegisterPage() {
-  console.log("Rendering Register Page");
+  // console.log("Rendering Register Page");
 
   const [
     resetForm,

@@ -8,7 +8,7 @@ import { useMutation } from "@tanstack/react-query";
 import { RotatingLines } from "react-loader-spinner";
 
 export default function LoginPage() {
-  console.log("Rendering Login Page");
+  // console.log("Rendering Login Page");
 
   const [resetForm, loginForm, setLoginFormField, setShowPasswordValue] =
     useStore(
