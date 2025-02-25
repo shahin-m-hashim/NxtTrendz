@@ -1,4 +1,4 @@
-import { cn } from "utils/cn";
+import cn from "utils/cn";
 import useStore from "store/_store";
 
 export default function AddToCart() {

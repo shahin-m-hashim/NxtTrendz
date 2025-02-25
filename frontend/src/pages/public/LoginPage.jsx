@@ -1,20 +1,21 @@
-import { cn } from "utils/cn";
+import cn from "utils/cn";
 import { useEffect } from "react";
 import useStore from "store/_store";
 import { Link } from "react-router";
 import { loginUser } from "api/authApi";
+import { useNavigate } from "react-router";
 import { useShallow } from "zustand/shallow";
 import { useMutation } from "@tanstack/react-query";
 import { RotatingLines } from "react-loader-spinner";
 
 export default function LoginPage() {
-  // console.log("Rendering Login Page");
+  const navigate = useNavigate();
 
   const [resetForm, loginForm, setLoginFormField, setShowPasswordValue] =
     useStore(
       useShallow((state) => [
         state.resetForm,
-        state.forms.login,
+        state.authSlice.login,
         state.setLoginFormField,
         state.setShowPasswordValue,
       ])
@@ -22,6 +23,10 @@ export default function LoginPage() {
 
   const mutation = useMutation({
     mutationFn: loginUser,
+    onSuccess: () => {
+      resetForm("login");
+      navigate("/");
+    },
   });
 
   const handleSubmit = (e) => {
@@ -38,6 +43,8 @@ export default function LoginPage() {
   useEffect(() => {
     return () => resetForm("login");
   }, []);
+
+  console.log("Rendering Login Page");
 
   return (
     <>

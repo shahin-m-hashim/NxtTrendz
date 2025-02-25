@@ -25,12 +25,12 @@ export default function Products() {
     isFetching,
     data: products,
   } = useQuery({
-    queryFn: getProducts,
-    queryKey: ["products", search, rating, sortBy, category],
+    queryKey: ["products", rating, search, sortBy, category],
+    queryFn: () => getProducts(rating, search, sortBy, category),
   });
 
   useEffect(() => {
-    if (isFetched && products) {
+    if (isFetched) {
       setProducts(products);
       searchProductInputRef.current.value = search;
     }

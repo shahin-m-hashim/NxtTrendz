@@ -1,4 +1,4 @@
-import { cn } from "utils/cn";
+import cn from "utils/cn";
 import { useSearchParams } from "react-router";
 import { getAllQueryParams, getQueryParam } from "utils/queryParams";
 

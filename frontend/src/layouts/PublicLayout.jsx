@@ -1,21 +1,8 @@
-import useStore from "store/_store";
 import { Outlet } from "react-router";
-import { Navigate, useLocation } from "react-router";
+import { Navigate } from "react-router";
 
 export default function PublicLayout() {
-  const { pathname } = useLocation();
-
-  const isAuthenticated = useStore((state) => state.auth.isAuthenticated);
-
-  if (isAuthenticated) {
-    return <Navigate to="/" />;
-  }
-
-  if (pathname === "/auth") {
-    return <Navigate to="/auth/login" />;
-  }
-
-  // console.log("Rendering Public Layout");
+  if (localStorage.getItem("isAuthenticated")) return <Navigate to="/" />;
 
   return (
     <section className="h-screen overflow-auto min-w-[320px] flex flex-col">

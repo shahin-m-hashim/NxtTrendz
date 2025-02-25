@@ -1,4 +1,4 @@
-import { cn } from "utils/cn";
+import cn from "utils/cn";
 import { useContext } from "react";
 import useStore from "store/_store";
 import { useShallow } from "zustand/shallow";

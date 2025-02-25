@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { useSearchParams } from "react-router";
+
 import { setQueryParam } from "utils/queryParams";
 import GlobalContext from "providers/GlobalProvider";
 
@@ -13,15 +14,15 @@ export default function SearchProducts() {
     setSearchParams(updatedQueryParams);
   };
 
+  const handleChange = () => {
+    const searchQuery = searchProductInputRef.current.value;
+    if (!searchQuery) handleSearch("");
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const searchQuery = searchProductInputRef.current.value;
     handleSearch(searchQuery);
-  };
-
-  const handleChange = () => {
-    const searchQuery = searchProductInputRef.current.value;
-    if (!searchQuery) handleSearch("");
   };
 
   return (

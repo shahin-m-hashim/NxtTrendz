@@ -1,7 +1,7 @@
 import { Suspense, lazy } from "react";
 import ErrorPage from "pages/ErrorPage";
 import ProductPage from "pages/private/ProductPage";
-import PrivateLayout from "components/layouts/PrivateLayout";
+import PrivateLayout from "layouts/PrivateLayout";
 
 const HomePage = lazy(() => import("pages/private/HomePage"));
 const CartPage = lazy(() => import("pages/private/CartPage"));

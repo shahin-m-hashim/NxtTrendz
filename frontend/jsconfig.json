@@ -6,7 +6,9 @@
       "store": ["store"],
       "pages": ["pages"],
       "utils": ["utils"],
+      "config": ["config"],
       "routes": ["routes"],
+      "layouts": ["layouts"],
       "schemas": ["schemas"],
       "providers": ["providers"],
       "components": ["components"]

@@ -1,10 +1,11 @@
-import api from "api/axiosConfig";
-import useStore from "store/_store";
+import delay from "utils/delay";
+import api from "config/axiosConfig";
 
 export const loginUser = async ({ username, password }) => {
   try {
-    const res = await api.post("/auth/login", { username, password });
-    useStore.getState().login(res.data?.data);
+    await delay();
+    await api.post("/auth/login", { username, password });
+    localStorage.setItem("isAuthenticated", true);
   } catch (e) {
     throw new Error(e.response?.data?.error || "Invalid credentials.");
   }
@@ -12,13 +13,12 @@ export const loginUser = async ({ username, password }) => {
 
 export const registerUser = async ({ username, password, confirmPassword }) => {
   try {
+    await delay();
     await api.post("/auth/register", {
       username,
       password,
       confirmPassword,
     });
-
-    useStore.getState().resetForm("register");
   } catch (e) {
     throw new Error(e.response?.data?.error || "Unknown error occurred.");
   }
@@ -26,8 +26,8 @@ export const registerUser = async ({ username, password, confirmPassword }) => {
 
 export const logoutUser = async () => {
   try {
+    await delay();
     await api.get("/auth/logout");
-    useStore.getState().logout();
   } catch (e) {
     throw new Error(e.response?.data?.error || "Unknown error occurred.");
   }

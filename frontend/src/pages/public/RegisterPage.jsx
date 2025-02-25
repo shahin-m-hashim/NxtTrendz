@@ -1,14 +1,16 @@
-import { cn } from "utils/cn";
 import { useEffect } from "react";
-import useStore from "store/_store";
 import { Link } from "react-router";
-import { registerUser } from "api/authApi";
 import { useShallow } from "zustand/shallow";
 import { useMutation } from "@tanstack/react-query";
 import { RotatingLines } from "react-loader-spinner";
 
+import cn from "utils/cn";
+import useStore from "store/_store";
+import { registerUser } from "api/authApi";
+import { useNavigate } from "react-router";
+
 export default function RegisterPage() {
-  // console.log("Rendering Register Page");
+  const navigate = useNavigate();
 
   const [
     resetForm,
@@ -19,7 +21,7 @@ export default function RegisterPage() {
   ] = useStore(
     useShallow((state) => [
       state.resetForm,
-      state.forms.register,
+      state.authSlice.register,
       state.setRegisterFormField,
       state.setShowPasswordValue,
       state.setShowConfirmPasswordValue,
@@ -28,6 +30,10 @@ export default function RegisterPage() {
 
   const mutation = useMutation({
     mutationFn: registerUser,
+    onSuccess: () => {
+      resetForm("register");
+      navigate("/auth/login");
+    },
   });
 
   const handleSubmit = (e) => {
@@ -48,6 +54,8 @@ export default function RegisterPage() {
   useEffect(() => {
     return () => resetForm("register");
   }, []);
+
+  console.log("Rendering Register Page");
 
   return (
     <>

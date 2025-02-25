@@ -1,7 +1,8 @@
 import { lazy, Suspense } from "react";
-import PublicLayout from "components/layouts/PublicLayout";
-import ErrorPage from "pages/ErrorPage";
 
+import PublicLayout from "layouts/PublicLayout";
+
+const ErrorPage = lazy(() => import("pages/ErrorPage"));
 const LoginPage = lazy(() => import("pages/public/LoginPage"));
 const RegisterPage = lazy(() => import("pages/public/RegisterPage"));
 

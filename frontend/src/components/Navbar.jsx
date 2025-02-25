@@ -1,13 +1,9 @@
 import { Link } from "react-router";
-import { logoutUser } from "api/authApi";
-import { useMutation } from "@tanstack/react-query";
+
+import LogoutBtn from "components/LogoutBtn";
 import CartLink from "components/cart/CartLink";
 
 export default function Navbar() {
-  const mutation = useMutation({
-    mutationFn: logoutUser,
-  });
-
   // console.log("Rendering Navbar");
 
   return (
@@ -47,18 +43,7 @@ export default function Navbar() {
           <CartLink />
 
           <li className="xs:bg-[#0967d2] xs:py-1 xs:px-3 rounded-md">
-            <button
-              type="button"
-              onClick={() => mutation.mutate()}
-              className="text-sm text-white"
-            >
-              <img
-                alt="home"
-                className="pt-1.5 xs:hidden size-6"
-                src="https://assets.ccbp.in/frontend/react-js/nxt-trendz-log-out-img.png"
-              />
-              <span className="hidden xs:inline">Logout</span>
-            </button>
+            <LogoutBtn />
           </li>
         </ul>
       </div>

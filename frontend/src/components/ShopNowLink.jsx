@@ -1,4 +1,4 @@
-import { cn } from "utils/cn";
+import cn from "utils/cn";
 import { Link } from "react-router";
 
 export default function ShopNowLink({ className = "" }) {
