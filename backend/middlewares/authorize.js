@@ -5,6 +5,8 @@ import {
   verifyRefreshToken,
 } from "../utils/token.js";
 
+import { environment } from "../server.js";
+
 export default async function authorize(req, res, next) {
   const { token, refreshToken } = req.cookies;
 
@@ -28,13 +30,13 @@ export default async function authorize(req, res, next) {
       res.cookie("token", newAccessToken, {
         httpOnly: true,
         maxAge: 1 * 24 * 60 * 60 * 1000,
-        secure: process.env.ENVIRONMENT === "production",
+        secure: environment === "production",
       });
 
       res.cookie("refreshToken", newRefreshToken, {
         httpOnly: true,
         maxAge: 7 * 24 * 60 * 60 * 1000,
-        secure: process.env.ENVIRONMENT === "production",
+        secure: environment === "production",
       });
 
       req.user = payload.sub;

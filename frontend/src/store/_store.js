@@ -7,6 +7,8 @@ import createCartSlice from "store/cartSlice";
 import createProductSlice from "store/productSlice";
 import createProductsSlice from "store/productsSlice";
 
+const ENVIRONMENT = import.meta.env.VITE_ENVIRONMENT || "production";
+
 const useStore = create(
   devtools(
     immer((set, get) => ({
@@ -17,7 +19,7 @@ const useStore = create(
     })),
     {
       name: "store",
-      enabled: import.meta.env.VITE_ENVIRONMENT === "development",
+      enabled: ENVIRONMENT === "development",
     }
   )
 );
