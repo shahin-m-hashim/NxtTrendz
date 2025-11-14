@@ -30,6 +30,7 @@ const paymentOptionsList = [
 
 export default function PaymentOptions() {
   const setPaymentMethod = useStore((store) => store.setPaymentMethod);
+  const paymentMethod = useStore((store) => store.cartSlice.paymentMethod);
 
   return (
     <ul className="flex flex-col gap-4 text-sm md:flex-row md:text-base">
@@ -44,8 +45,10 @@ export default function PaymentOptions() {
             name="payment-method"
             value={paymentOption.id}
             disabled={paymentOption.isDisabled}
-            onChange={(e) => setPaymentMethod(e.target.value)}
+            checked={paymentMethod === paymentOption.id}
+            onChange={() => setPaymentMethod(paymentOption.id)}
           />
+
           <label
             htmlFor={paymentOption.id}
             className={paymentOption.isDisabled ? "opacity-50" : ""}
